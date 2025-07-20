@@ -1,4 +1,4 @@
-def read_file_to_dict(filename):
+def read_file_to_dict(str):
     """Lee un archivo de ventas donde cada venta es producto:valor_de_venta;... y agrupa los valores por producto en una lista.
 
     :param filename: str - nombre del archivo a leer.
@@ -8,7 +8,7 @@ def read_file_to_dict(filename):
     ventas_por_producto = {}
 
     try:
-        with open(filename, 'r') as file:
+        with open(str, 'r') as file:
             linea = file.readline().strip()
             ventas = linea.split(';')
 
@@ -17,26 +17,26 @@ def read_file_to_dict(filename):
                     try:
                         producto, valor = venta.split(':')
                         valor = float(valor)
-                        if producto in ventas_por_producto:
-                            ventas_por_producto[producto].append(valor)
+                        if producto in dict:
+                            dict[producto].append(valor)
                         else:
-                            ventas_por_producto[producto] = [valor]
+                            dict[producto] = [valor]
                     except ValueError:
                         print(f"Advertencia: formato inválido en venta '{venta}' (ignorada).")
 
-        return ventas_por_producto
+        return dict
 
     except FileNotFoundError:
-        print(f"Error: El archivo '{filename}' no existe.")
+        print(f"Error: El archivo '{str}' no existe.")
         return {}
 
-def process_dict(data):
+def process_dict(dict):
     """Para cada producto, imprime el total de ventas y el promedio, en el orden natural del diccionario.
 
     :param data: dict - diccionario a procesar.
     :return: None
     """
-    for producto, montos in data.items():
+    for producto, montos in dict.items():
         total = sum(montos)
         promedio = total / len(montos) if montos else 0
         print(f"{producto}: ventas totales ${total:.2f}, promedio ${promedio:.2f}")
