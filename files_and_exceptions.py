@@ -5,7 +5,7 @@ def read_file_to_dict(filename):
     :return: dict - diccionario con listas de montos por producto.
     :raises: FileNotFoundError - si el archivo no existe.
     """
-        ventas_por_producto = {}
+    ventas_por_producto = {}
 
     try:
         with open(filename, 'r') as file:
