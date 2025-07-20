@@ -5,24 +5,25 @@ def read_file_to_dict(filename):
     :return: dict - diccionario con listas de montos por producto.
     :raises: FileNotFoundError - si el archivo no existe.
     """
-    ventas_por_producto = {}
+        ventas_por_producto = {}
+
     try:
         with open(filename, 'r') as file:
             linea = file.readline().strip()
             ventas = linea.split(';')
 
             for venta in ventas:
-                if venta:  # Ignorar cadenas vacías causadas por el último ';'
+                if venta:  # Evita procesar cadenas vacías por el último ;
                     try:
                         producto, valor = venta.split(':')
                         valor = float(valor)
-
                         if producto in ventas_por_producto:
                             ventas_por_producto[producto].append(valor)
                         else:
                             ventas_por_producto[producto] = [valor]
                     except ValueError:
-                        print(f"Formato inválido en venta: '{venta}' (ignorada)")
+                        print(f"Advertencia: formato inválido en venta '{venta}' (ignorada).")
+
         return ventas_por_producto
 
     except FileNotFoundError:
